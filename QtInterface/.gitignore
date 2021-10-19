@@ -1,0 +1,4 @@
+build/
+buildsave/
+vgcore*
+*.o
