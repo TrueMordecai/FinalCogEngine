@@ -58,8 +58,8 @@ QWidget *myWindow::setupAdvancedTab()
 
 void myWindow::startScenario()
 {
-    this->m_serialPort->getCsv()->set_filename(this->m_scenarioBrowse->text().toStdString());
-    this->m_serialPort->getCsv()->read_file();
+    this->m_serialPort->getCsv()->setFilename(this->m_scenarioBrowse->text().toStdString());
+    this->m_serialPort->getCsv()->readFile();
     this->m_ScenarioTimer->start();
     QString string = "Playing : ";
     QString buffer = QString(this->m_serialPort->getCsv()->getFilename().c_str());

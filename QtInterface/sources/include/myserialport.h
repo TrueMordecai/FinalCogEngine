@@ -5,14 +5,8 @@
 #include <QTimer>
 #include <QtWidgets>
 #include <QSerialPort>
-#include <QSerialPort>
 #include <QSerialPortInfo>
-#include <QDebug>
-#include <fstream>
-#include <bitset>
-#include <QTime>
 #include <QString>
-#include <QDataStream>
 
 class myWindow;
 
@@ -20,11 +14,8 @@ class mySerialPort : public QWidget
 {
     Q_OBJECT
 public:
-
     mySerialPort();
     mySerialPort(myWindow *winow);
-
-
     bool getIsConnected();
     int getSensorNumber();
     void setSensorNumber(int i);

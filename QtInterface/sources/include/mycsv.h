@@ -10,8 +10,8 @@ class myCsv
 {
 public:
     myCsv(std::string filename);
-    void read_file();
-    void set_filename(std::string filename);
+    void readFile();
+    void setFilename(std::string filename);
     std::string getFilename();
     std::string getDefaultScenario();
     std::string getFileStream();
@@ -19,10 +19,10 @@ public:
 
 private:
     const std::string C_DEFAULT_FILEPATH = "/home/ZeBoss/CognitiveEngine/CogEngineArduino/QtInterface/scn_0.csv";
-    std::string m_filename;
+    std::string m_fileName;
     std::vector<std::string> m_linesData;
-    std::string m_filestream;
-    int m_line_read;
+    std::string m_fileStream;
+    int m_lineRead;
 };
 
 #endif // MYCSV_H

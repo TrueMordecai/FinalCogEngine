@@ -6,7 +6,6 @@
 class mySensor : public QObject
 {
     Q_OBJECT
-
 public:
     mySensor();
     mySensor(int lcd_value);

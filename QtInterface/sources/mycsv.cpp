@@ -5,56 +5,56 @@
 myCsv::myCsv(std::string filename)
 {
     if (!filename.empty())
-        this->set_filename(filename);
-    this->read_file();
+        this->setFilename(filename);
+    this->readFile();
 }
 
 std::string myCsv::getFileStream()
 {
-    return (this->m_filestream);
+    return (this->m_fileStream);
 }
 
 QString myCsv::getNewLine()
 {
-    m_line_read++;
-    if (this->m_linesData[this->m_line_read].size() > 1)
-        return (this->m_linesData[this->m_line_read].data());
+    m_lineRead++;
+    if (this->m_linesData[this->m_lineRead].size() > 1)
+        return (this->m_linesData[this->m_lineRead].data());
     else {
         return (nullptr);
     }
 }
 
-void myCsv::read_file()
+void myCsv::readFile()
 {
-    m_line_read = -1;
+    m_lineRead = -1;
     std::ifstream file;
     std::string line;
-    file.open(m_filename.data());
+    file.open(m_fileName.data());
     if (!file.good()) {
         file.open(C_DEFAULT_FILEPATH);
-        set_filename(C_DEFAULT_FILEPATH);
+        setFilename(C_DEFAULT_FILEPATH);
     }
     if (file) {
         std::string data;
         while(getline(file, data)) {
             std::string datas = data;
             this->m_linesData.push_back(datas.data());
-            this->m_filestream += datas.data();
-            this->m_filestream += '\n';
+            this->m_fileStream += datas.data();
+            this->m_fileStream += '\n';
         }
     }
 }
 
-void myCsv::set_filename(std::string filename)
+void myCsv::setFilename(std::string filename)
 {
-    this->m_filename = filename;
-    m_filename = std::string(filename);
-    qDebug() << m_filename.data();
+    this->m_fileName = filename;
+    m_fileName = std::string(filename);
+    qDebug() << m_fileName.data();
 }
 
 std::string myCsv::getFilename()
 {
-    return (this->m_filename);
+    return (this->m_fileName);
 }
 
 std::string myCsv::getDefaultScenario()

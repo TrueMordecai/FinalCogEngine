@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QWidget>
-#include <myplot.h>
 #include <QElapsedTimer>
 #include <QDebug>
 #include <QTimer>
@@ -16,7 +15,6 @@
 class myWindow : public QTabWidget
 {
     Q_OBJECT
-
 public:
     myWindow();
     QWidget *setupBasicTab();
@@ -35,7 +33,6 @@ public slots:
 private:
     std::vector<mySensor*> m_sensors;
     mySerialPort *m_serialPort;
-    int m_lineread;
     QFrame *alarmBackground;
     QSound *alarmSound;
     QTimer *m_ScenarioTimer;
