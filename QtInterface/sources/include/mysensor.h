@@ -17,6 +17,7 @@ public:
 private:
     QLCDNumber *m_lcd;
     int m_lcdValue = 0;
+    bool m_isOperational = true;
 };
 
 #endif // MYSENSOR_H

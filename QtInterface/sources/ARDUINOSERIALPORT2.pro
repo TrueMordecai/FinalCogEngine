@@ -13,6 +13,7 @@ SOURCES +=                      \
     myserialport.cpp    \
     mywindow.cpp        \
     main.cpp                    \
+    mywindowScenario.cpp
 
 HEADERS +=                      \
     include/mycsv.h             \
