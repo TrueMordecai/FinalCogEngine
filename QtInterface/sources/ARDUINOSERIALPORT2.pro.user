@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 5.0.0, 2021-09-29T16:24:40. -->
+<!-- Written by QtCreator 5.0.0, 2021-10-19T09:53:49. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -235,9 +235,8 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ARDUINOSERIALPORT22</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/ZeBoss/CognitiveEngine/CogEngineArduino/QtInterface/sources/ARDUINOSERIALPORT2.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/ZeBoss/CognitiveEngine/CogEngineArduino/QtInterface/sources/ARDUINOSERIALPORT2.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/ZeBoss/CognitiveEngine/FinalCogEngine/QtInterface/sources/ARDUINOSERIALPORT2.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/ZeBoss/CognitiveEngine/FinalCogEngine/QtInterface/sources/ARDUINOSERIALPORT2.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
