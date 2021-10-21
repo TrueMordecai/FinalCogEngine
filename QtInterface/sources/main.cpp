@@ -1,5 +1,7 @@
 #include <QApplication>
 #include "mywindow.h"
+#include <QPictureFormatPlugin>
+
 
 int main(int argc, char *argv[])
 {

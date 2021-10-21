@@ -29,6 +29,21 @@ void myWindow::updateScenario()
     }
 }
 
+void myWindow::startScenario()
+{
+    this->m_serialPort->getCsv()->setFilename(this->m_scenarioBrowse->text().toStdString());
+    this->m_serialPort->getCsv()->readFile();
+    this->m_ScenarioTimer->start();
+    QString string = "Playing : ";
+    QString buffer = QString(this->m_serialPort->getCsv()->getFilename().c_str());
+    QStringList split = buffer.split('/');
+    string.append(split[split.size() - 1]);
+    if (this->m_serialPort->getCsv()->getFilename() == this->m_serialPort->getCsv()->getDefaultScenario())
+        string.append(" [default]");
+    this->m_scenarioLabel->setText(string);
+    this->m_scenarioLabel->show();
+}
+
 QWidget *myWindow::setupScenarioTab()
 {
     this->gridLayoutScenarioSensor = new QGridLayout;

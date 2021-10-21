@@ -23,12 +23,10 @@ public:
     void doConnectLcd();
     int countSensorFromCsv();
     int countSensorFromArduino();
-    void updateLcdValue();
     void setupSerialPort();
     myCsv *getCsv();
 
 public slots :
-    void updateLcdValue(int sensor_index, int value);
     void parseNewCsvLine(void);
     void parseNewArduinoLine(void);
 

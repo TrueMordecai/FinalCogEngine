@@ -23,7 +23,7 @@ QWidget *myWindow::setupAdvancedTab()
     QLabel *logo = new QLabel;
 
     /// ENLEVEZ LE PATH EN BRUT !!!!
-    logo->setPixmap(QPixmap("../logo.jpg"));
+    logo->setPixmap(QPixmap("../data/logo.jpg"));
     grid->addWidget(logo, 0, 1, 2, 2, Qt::AlignCenter);
 
     for (int i = 0; i != this->m_serialPort->getSensorNumber(); i++ ) {
@@ -33,7 +33,6 @@ QWidget *myWindow::setupAdvancedTab()
         // Overall settings
         label->setText((("Sensor ") + std::to_string(i + 1)).c_str()); // for "Sensor $i" label
         this->m_sensors[i]->getLcd()->setFixedSize(100, 40);
-        this->m_sensors[i]->getLcd()->display(this->m_sensors[i]->getLcdValue()); /// TEMPORARY
 
         // Set Vbox layout
         vbox->addWidget(label);
@@ -45,7 +44,9 @@ QWidget *myWindow::setupAdvancedTab()
             grid->addLayout(vbox, 2, i, 1, 1);
             continue;
         }
-        // Else showraddLayout(vbox, 1, 0, 1, 1);
+        // Else show that nice U layout :)
+        if (i == 0 && this->m_serialPort->getSensorNumber() > 4)
+            grid->addLayout(vbox, 1, 0, 1, 1);
         else if (i == this->m_serialPort->getSensorNumber() - 1) {
             grid->addLayout(vbox, 1, i - 2, 1, 1);
         } else {
@@ -56,28 +57,14 @@ QWidget *myWindow::setupAdvancedTab()
     return (tab);
 }
 
-void myWindow::startScenario()
-{
-    this->m_serialPort->getCsv()->setFilename(this->m_scenarioBrowse->text().toStdString());
-    this->m_serialPort->getCsv()->readFile();
-    this->m_ScenarioTimer->start();
-    QString string = "Playing : ";
-    QString buffer = QString(this->m_serialPort->getCsv()->getFilename().c_str());
-    QStringList split = buffer.split('/');
-    string.append(split[split.size() - 1]);
-    if (this->m_serialPort->getCsv()->getFilename() == this->m_serialPort->getCsv()->getDefaultScenario())
-        string.append(" [default]");
-    this->m_scenarioLabel->setText(string);
-    this->m_scenarioLabel->show();
-}
-
 void myWindow::startAlarm()
 {
     for (int i = 0; i != this->getSerialPort()->getSensorNumber(); i++) {
-        if (this->getSensor()[1]->getLcdValue() < 100) {
+        if (this->getSensor()[i]->getLcdValue() < this->getSensor()[i]->getOptionSpinBox()->value() && this->getSensor()[i]->getOptionCheckBox()->isChecked()) {
             this->alarmBackground->setStyleSheet("background-color: red");
             //if (alarmSound->isFinished())
                 //alarmSound->play();
+            return;
         } else {
             this->alarmBackground->setStyleSheet("background-color: green");
         }
@@ -86,8 +73,20 @@ void myWindow::startAlarm()
 
 QWidget *myWindow::setupOptionTab()
 {
-    QLabel *l = new QLabel;
-    return (l);
+    QWidget *tab = new QWidget;
+    QGridLayout *grid = new QGridLayout;
+    std::vector<mySensor *> sensors = this->getSensor();
+    for (int i = 0; i != this->getSerialPort()->getSensorNumber(); i++) {
+        QString *labelText = new QString("Sensor ");
+        labelText->append(i + '0');
+        QLabel *label = new QLabel;
+        label->setText(*labelText);
+        grid->addWidget(label, i + 1, 0, 1, 1);
+        grid->addWidget(sensors[i]->getOptionCheckBox(), i + 1, 1, 1, 1);
+        grid->addWidget(sensors[i]->getOptionSpinBox(), i + 1, 2, 1, 1);
+    }
+    tab->setLayout(grid);
+    return (tab);
 }
 
 myWindow::myWindow()
@@ -98,10 +97,9 @@ myWindow::myWindow()
     connect(this->m_ScenarioTimer, SIGNAL(timeout()), this, SLOT(updateScenario()));
     for (int i = 0; i != 10; i++)
         m_scenarioSensors.push_back(new mySensor);
-    alarmSound = new QSound("../alarme1.wav");
+    alarmSound = new QSound("../data/alarme1.wav");
     for (int i = 0; i != this->m_serialPort->getSensorNumber(); i++ )
-        m_sensors.push_back(new mySensor(i));
-    //this->m_serialPort->doConnectLcd();
+        m_sensors.push_back(new mySensor);
 
     // Initialize all tabs
     this->addTab(setupBasicTab(), "Basic");

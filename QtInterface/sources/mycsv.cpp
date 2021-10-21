@@ -49,7 +49,6 @@ void myCsv::setFilename(std::string filename)
 {
     this->m_fileName = filename;
     m_fileName = std::string(filename);
-    qDebug() << m_fileName.data();
 }
 
 std::string myCsv::getFilename()

@@ -28,29 +28,27 @@ void mySerialPort::setupSerialPort()
 int mySerialPort::tryConection()
 {
     m_arduinoSerialPort = new QSerialPort();
-    foreach (const QSerialPortInfo &portToConnect, QSerialPortInfo::availablePorts()) {
-        if (portToConnect.portName().contains("ttyACM")) {
-            m_arduinoSerialPort->setPort(portToConnect);
-            setupSerialPort();
-            bool isOpen = m_arduinoSerialPort->open(QIODevice::ReadWrite);
-            if (!isOpen) {
+    foreach (const QSerialPortInfo &portToConnect, QSerialPortInfo::availablePorts()) { // Check every port
+        if (portToConnect.portName().contains("ttyACM")) { // If found (sensors must begin with ttyACM)
+            m_arduinoSerialPort->setPort(portToConnect); // Connect
+            setupSerialPort(); // Setup
+            bool isOpen = m_arduinoSerialPort->open(QIODevice::ReadWrite); // Try to open
+            if (!isOpen) { // If its not open then 0 Sensors availible
                 m_isConnected = false;
                 return (0);
             }
-            m_arduinoSerialPort->waitForReadyRead();
+            m_arduinoSerialPort->waitForReadyRead(); // Wait a line to be read
             std::string buffer = m_arduinoSerialPort->readLine().toStdString();
-            qDebug() << buffer.c_str();
             int count = 0;
-            for (int i = 0; buffer[i] != '\n'; i++) {
+            for (int i = 0; buffer[i] != '\n'; i++) { // Count ; occurences
                 if (buffer[i] == ';')
                     count++;
             }
-            qDebug() << buffer.c_str();
             m_isConnected = true;
             return (count);
         }
     }
-    m_isConnected = false;
+    m_isConnected = false; // If no port starting with ttyACM is found
     return (0);
 }
 
@@ -60,15 +58,8 @@ void mySerialPort::parseNewArduinoLine(void)
     QVector<QByteArray> values = buffer.split(';').toVector();
     std::vector<mySensor*> sensors = this->m_myWindow->getSensor();
     for (int i = 0; i != values.size() - 1; i++) {
-        sensors[i]->setLcdValue(values[i].toInt());
-        sensors[i]->displayLcdValue();
+        sensors[i]->updateLcd(values[i].toInt(), true);
     }
-}
-
-void mySerialPort::updateLcdValue(int sensor_index, int value)
-{
-    this->m_myWindow->getSensor()[sensor_index]->setLcdValue(value);
-    this->m_myWindow->getSensor()[sensor_index]->displayLcdValue();
 }
 
 void mySerialPort::parseNewCsvLine(void)
@@ -79,7 +70,7 @@ void mySerialPort::parseNewCsvLine(void)
     QStringList vectorTabString;
     vectorTabString = to_parse.split(";");
     for (int i = 0; i != this->m_sensorNumber; i++)
-        updateLcdValue(i, vectorTabString[i].toInt());
+        this->m_myWindow->getSensor()[i]->updateLcd(vectorTabString[i].toInt(), true);
 }
 
 int mySerialPort::countSensorFromCsv()
